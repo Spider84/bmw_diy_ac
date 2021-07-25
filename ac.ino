@@ -3,12 +3,12 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
-#define MIN_TEMP   220 //1.00V
-#define WORK_TEMP  260 //1.20V
+#define MIN_TEMP     620 //2.00V  6°C
+#define WORK_TEMP    550 //1.77V 12°C
 
-#define MIN_PRESS  220 //3.5V
-#define WORK_PRESS 750
-#define MAX_PRESS  760 //3.5V
+#define MIN_PRESS    10 //3.5V
+#define WORK_PRESS   750
+#define MAX_PRESS    840 //3.5V
 
 #define FAM_TH_H     60  //60%
 #define FAM_TH_L     40  //40%
