@@ -257,19 +257,24 @@ bool led_blink(void *argument)
 }
 
 bool every_second(void *argument /* optional argument given to in/at/every */) {
+    char buf[16];
     display.clearDisplay();    
     display.setCursor(0, 0);     // Start at top-left corner
+    display.write("AC: ");
     display.write((ac_is_on)?"ON":"OFF");
-    display.write(" ");
-    display.write(RunningAverageTemperature);
-    display.write(" ");
-    display.write(RunningAveragePress);
-    display.write("\n");
+    display.write(" FAN: ");
+    sprintf(buf, "%d", pwm_duty);
+    display.write(buf);
+    display.write("\nT: ");
+    sprintf(buf, "%d ", RunningAverageTemperature);
+    display.write(buf);
+    display.write(" P: ");
+    sprintf(buf, "%d", RunningAveragePress);
+    display.write(buf);
+    display.write("\nGP: ");
     display.write((good_press)?"1":"0");
-    display.write(" ");
-    display.write((good_temp)?"1":"0");
-    display.write(" ");
-    display.write(pwm_duty);    
+    display.write(" GT: ");
+    display.write((good_temp)?"1":"0");   
     display.display();
   
     Serial.print("Temp: ");
@@ -278,8 +283,12 @@ bool every_second(void *argument /* optional argument given to in/at/every */) {
     Serial.print(RunningAveragePress);
     Serial.print(", ");
     Serial.print((ac_is_on)?"ON":"OFF");
-    Serial.print(", ");
-    Serial.println(pwm_duty);    
+    Serial.print(", GP: ");
+    Serial.print((good_press)?"1":"0");
+    Serial.print(", GT: ");
+    Serial.print((good_temp)?"1":"0");
+    Serial.print(", Duty: ");
+    Serial.println(RunningAverageFAN);    
     
     return true; // to repeat the action - false to stop
 }
