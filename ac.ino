@@ -32,6 +32,7 @@ auto t_led_blink = timer_create_default();
 uint8_t pwm_duty = 0;
 unsigned int RunningAverageTemperature = 0;
 unsigned int RunningAveragePress = 0;
+unsigned int RunningAverageFAN = 0;
 bool ac_is_on = false;
 bool good_press = true;
 bool good_temp = true;
@@ -280,6 +281,21 @@ ISR(TIMER1_CAPT_vect) // input capture interrupt
       TCCR1B &= ~(1 << ICES1);      
       riseTime = ICR1;
       pwm_duty=((uint32_t)riseTime*100U)/(fallTime+riseTime);
+    
+    const byte f_count = 16;
+    static word buffer_fan[f_count];
+    static byte n_fan=0;
+
+    buffer_fan[n_fan++] = pwm_duty;
+    if (n_fan >= f_count)
+    {
+        n_fan = 0;
+    }
+    for(int i=0; i< f_count; ++i)
+    {
+        RunningAverageFAN += buffer_fan[i];
+    }
+    RunningAverageFAN /= f_count;
   }
   else // falling edge detected
   {
