@@ -36,7 +36,7 @@ uint8_t pwm_duty = 0;
 unsigned int RunningAverageTemperature = 0;
 unsigned int RunningAveragePress = 0;
 unsigned int RunningAverageFAN = 0;
-bool ac_is_on = false;
+bool ac_is_on = true;
 bool good_press = true;
 bool good_temp = true;
 
