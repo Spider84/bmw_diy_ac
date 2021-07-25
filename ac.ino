@@ -51,7 +51,7 @@ void setup() {
   pinMode(FAN_RELAY, OUTPUT);
   pinMode(AC_LED, OUTPUT);
   pinMode(BUTTON, INPUT_PULLUP);  
-  Serial.begin(115200);
+  Serial.begin(57600);
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only
   }
