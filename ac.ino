@@ -106,6 +106,16 @@ void loop() {
   } else {
     digitalWrite(AC_RELAY, HIGH);
   }
+
+  if (Serial.available()>0) {
+    byte ch = Serial.read();
+    if (ch == '1'){
+      ac_is_on = true;
+    } else
+    if (ch == '0') {
+      ac_is_on = false;
+    }
+  }
 }
 
 void CheckBUTTON(void)
