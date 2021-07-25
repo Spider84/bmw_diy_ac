@@ -60,13 +60,12 @@ void setup() {
 
   //Таймер для генерации собственного ШИМ
   pinMode(3, OUTPUT);
-  TCNT2 = 0;
-  OCR2A = 250;
-  OCR2B = 220;
-  TCCR2A =(1<<COM2A1) | (1<<COM2B1) | (1<<WGM21) | (1<< WGM20);
-  TCCR2B = (1<<WGM22) | (1<<CS22);
-  TIFR2 = (1<<TOV2);
-  TIMSK2 = 0;
+  
+  TCCR2A = (1<<COM2B1) | (1<<WGM20); 
+  TCCR2B = (1<<WGM22) | (1<<CS20) | (1<<CS21) | (1<<CS22);
+  
+  OCR2A = 78; //Sets freq 100Hz
+  OCR2B = 38;//50% duty cycle
   //Таймер для рассчёта частоты с ЕКУ
   TCNT1 = 0;
   TCCR1A = 0;
