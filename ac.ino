@@ -67,11 +67,12 @@ void setup() {
   OCR2A = 78; //Sets freq 100Hz
   OCR2B = 38;//50% duty cycle
   //Таймер для рассчёта частоты с ЕКУ
+  pinMode(8, INPUT_PULLUP);
   TCNT1 = 0;
   TCCR1A = 0;
   TIFR1 = (1<<ICF1);    /* clear input capture flag */
-  TIMSK1 |= (1<<ICIE1);
-  TCCR1B = 0x41;       /* capture on rising edge */ 
+  TIMSK1 |= (1<<ICIE1) | (1<<TOV1);
+  TCCR1B = (1<<CS11) | (1<<ICES1);       /* capture on rising edge */ 
 
   sei(); // interrupts on.
 
