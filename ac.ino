@@ -43,8 +43,8 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 void setup() {
   // put your setup code here, to run once:
   pinMode(LED_BUILTIN, OUTPUT);
-  digitalWrite(AC_RELAY, LOW);
-  digitalWrite(FAN_RELAY, LOW);
+  digitalWrite(AC_RELAY, HIGH);
+  digitalWrite(FAN_RELAY, HIGH);
   digitalWrite(AC_LED, LOW);
   digitalWrite(BUTTON, HIGH);
   pinMode(AC_RELAY, OUTPUT);
@@ -102,9 +102,9 @@ void loop() {
   checkPress();
   
   if (ac_is_on && good_press && good_temp) {
-    digitalWrite(AC_RELAY, HIGH);
-  } else {
     digitalWrite(AC_RELAY, LOW);
+  } else {
+    digitalWrite(AC_RELAY, HIGH);
   }
 }
 
@@ -155,8 +155,8 @@ void changeACState(void)
     Serial.println("ON");
     t_led_blink.every(100, led_blink);
   } else {
-    digitalWrite(FAN_RELAY, LOW);
-    digitalWrite(AC_RELAY, LOW);
+    digitalWrite(FAN_RELAY, HIGH);
+    digitalWrite(AC_RELAY, HIGH);
     digitalWrite(AC_LED, LOW);    
     Serial.println("OFF");    
     t_led_blink.every(500, led_blink);
@@ -167,10 +167,10 @@ void checkFANrelay(void)
 {
   if (ac_is_on) {
     if (pwm_duty>FAM_TH) {
-      digitalWrite(FAN_RELAY, LOW);
+      digitalWrite(FAN_RELAY, HIGH);
     } else
     {
-      digitalWrite(FAN_RELAY, HIGH);
+      digitalWrite(FAN_RELAY, LOW);
     }
   }
 }
