@@ -187,10 +187,10 @@ void checkFANrelay(void)
 
 void checkTemp(void)
 {    
-    if (RunningAverageTemperature<=MIN_TEMP) {
+    if (RunningAverageTemperature>=MIN_TEMP) {
       good_temp = false;
     } else 
-    if (RunningAverageTemperature>=WORK_TEMP) {
+    if (RunningAverageTemperature<=WORK_TEMP) {
       good_temp = true;
     }
 }
