@@ -10,7 +10,10 @@
 #define WORK_PRESS 750
 #define MAX_PRESS  760 //3.5V
 
-#define FAM_TH     10  //10%
+#define FAM_TH_H     60  //60%
+#define FAM_TH_L     40  //40%
+
+#define FAN_WIN      2 // 2sec
 
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 32 // OLED display height, in pixels
@@ -176,11 +179,16 @@ void changeACState(void)
 void checkFANrelay(void)
 {
   if (ac_is_on) {
-    if (pwm_duty>FAM_TH) {
-      digitalWrite(FAN_RELAY, HIGH);
-    } else
-    {
-      digitalWrite(FAN_RELAY, LOW);
+    uint32_t t = millis();
+    static uint32_t last_d;
+    if (t-last_d>=FAN_WIN*1000) {
+      if (RunningAverageFAN<=FAM_TH_L) {
+        digitalWrite(FAN_RELAY, LOW);
+      } else
+      if (RunningAverageFAN>=FAM_TH_H) {
+        digitalWrite(FAN_RELAY, HIGH);
+      }
+      last_d = t;
     }
   }
 }
